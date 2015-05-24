@@ -23,7 +23,49 @@ namespace WpfApplication1
         public MainWindow()
         {
             InitializeComponent();
+            creatpuzzle(5, 5);
+            creatbtn();
         }
+
+        private void creatbtn() {
+            Button bt = new Button() { 
+            Height=50,
+            Width=50
+
+            };
+            bt.Click += new RoutedEventHandler(btclick);
+            can1.Children.Add(bt);
+        }
+
+        private void btclick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("hi");
+        }
+
+        private void creatpuzzle(int x, int y) 
+        {
+            
+            for (int i = 0; i < x; i++) {
+                for (int j = 0; j < y; j++) {
+                    Ellipse rec = new Ellipse()
+                    {
+                        Height = 50,
+                        Width = 50,
+                        Stroke= new SolidColorBrush(Colors.Black)
+                       
+                    };
+                    
+                 //   rec.MouseDown +=  new MouseButtonEventHandler(this.Ellipse1_MouseDown);  why no use?
+                 //   rec.MouseMove +=  new MouseEventHandler(this.Ellipse1_MouseMove);
+                 //   rec.MouseUp += new MouseButtonEventHandler(this.Ellipse1_MouseUp);
+                    Canvas.SetTop(rec, 40 +i*55);
+                    Canvas.SetLeft(rec, 40+ j*55);
+                    
+                    can1.Children.Add(rec);
+                }
+            }
+        }
+
 
         double mouseX;
         double mouseY;
@@ -32,8 +74,9 @@ namespace WpfApplication1
         double currentshapX;
         double currentshapY;
 
-        private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Ellipse1_MouseDown(object sender, MouseButtonEventArgs e)
         {
+           
             Ellipse item = sender as Ellipse;
             mouseX = e.GetPosition(null).X;
             mouseY = e.GetPosition(null).Y;
@@ -44,7 +87,7 @@ namespace WpfApplication1
             lb2.Content = oldpositionY;
         }
 
-        private void Ellipse_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Ellipse1_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Ellipse item = sender as Ellipse;
             item.ReleaseMouseCapture();
@@ -55,7 +98,7 @@ namespace WpfApplication1
         }
 
 
-        private void Ellipse_MouseMove(object sender, MouseEventArgs e)
+        private void Ellipse1_MouseMove(object sender, MouseEventArgs e)
         {
             Ellipse item = sender as Ellipse;
             if (item.IsMouseCaptured)
@@ -114,8 +157,8 @@ namespace WpfApplication1
                     rect.SetValue(Canvas.TopProperty, oldpositionY);
                     oldpositionX = tempX;
                     oldpositionY = tempY;
-lb1.Content = oldpositionX;
-lb2.Content = oldpositionY;
+                    lb1.Content = oldpositionX;
+                    lb2.Content = oldpositionY;
 
                 }            
             }

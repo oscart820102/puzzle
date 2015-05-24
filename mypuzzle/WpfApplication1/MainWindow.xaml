@@ -5,34 +5,10 @@
 
 
 
-    <Canvas>
+    <Canvas x:Name="can1"  >
         <Label x:Name="lb1" Content="Label" Canvas.Left="468" Canvas.Top="40"/>
         <Label x:Name="lb2" Content="Label" Canvas.Left="565" Canvas.Top="40"/>
-        <Ellipse Fill="#FFF4F4F5" Height="50" Canvas.Left="40" Stroke="Black" Canvas.Top="40" Width="50" MouseMove="Ellipse_MouseMove" MouseDown="Ellipse_MouseDown" MouseUp="Ellipse_MouseUp" />
-        <Rectangle Height="50" Canvas.Left="100" Stroke="Black" Canvas.Top="40" Width="50" Fill="#FF0651A7" />
-        <Rectangle Fill="#FF27EC43" Height="50" Canvas.Left="160" Stroke="Black" Canvas.Top="40" Width="50"/>
-        <Rectangle Fill="#FFE22708" Height="50" Canvas.Left="220" Stroke="Black" Canvas.Top="40" Width="50"/>
-        <Rectangle Fill="#FFE22708" Height="50" Canvas.Left="40" Stroke="Black" Canvas.Top="100" Width="50"/>
-        <Rectangle Fill="#FFFF8892" Height="50" Canvas.Left="100" Stroke="Black" Canvas.Top="100" Width="50" />
-        <Rectangle Fill="#FFF2F413" Height="50" Canvas.Left="160" Stroke="Black" Canvas.Top="100" Width="50"/>
-        <Rectangle Fill="#FFD927EC" Height="50" Canvas.Left="220" Stroke="Black" Canvas.Top="100" Width="50"/>
-        <Rectangle Fill="#FFE22708" Height="50" Canvas.Left="40" Stroke="Black" Canvas.Top="160" Width="50"/>
-        <Rectangle Fill="#FFFF8892" Height="50" Canvas.Left="100" Stroke="Black" Canvas.Top="160" Width="50" />
-        <Rectangle Fill="#FFF2F413" Height="50" Canvas.Left="160" Stroke="Black" Canvas.Top="160" Width="50"/>
-        <Rectangle Fill="#FFD927EC" Height="50" Canvas.Left="220" Stroke="Black" Canvas.Top="160" Width="50"/>
-        <Rectangle Fill="#FF27EC43" Height="50" Canvas.Left="40" Stroke="Black" Canvas.Top="220" Width="50"/>
-        <Rectangle Fill="#FFFF8892" Height="50" Canvas.Left="160" Stroke="Black" Canvas.Top="220" Width="50" />
-        <Rectangle Fill="#FF4848EC" Height="50" Canvas.Left="100" Stroke="Black" Canvas.Top="220" Width="50"/>
-        <Rectangle Fill="#FFF2F413" Height="50" Canvas.Left="220" Stroke="Black" Canvas.Top="220" Width="50"/>
-        <Rectangle Fill="#FFE22708" Height="50" Canvas.Left="280" Stroke="Black" Canvas.Top="100" Width="50"/>
-        <Rectangle Fill="#FFF2F413" Height="50" Canvas.Left="280" Stroke="Black" Canvas.Top="160" Width="50"/>
-        <Rectangle Fill="#FF4848EC" Height="50" Canvas.Left="280" Stroke="Black" Canvas.Top="220" Width="50"/>
-        <Rectangle Fill="#FF27EC43" Height="50" Canvas.Left="280" Stroke="Black" Canvas.Top="40" Width="50"/>
-        <Rectangle Fill="#FF27EC43" Height="50" Canvas.Left="40" Stroke="Black" Canvas.Top="280" Width="50"/>
-        <Rectangle Fill="#FFFF8892" Height="50" Canvas.Left="160" Stroke="Black" Canvas.Top="280" Width="50" />
-        <Rectangle Fill="#FF4848EC" Height="50" Canvas.Left="100" Stroke="Black" Canvas.Top="280" Width="50"/>
-        <Rectangle Fill="#FFF2F413" Height="50" Canvas.Left="220" Stroke="Black" Canvas.Top="280" Width="50"/>
-        <Rectangle Fill="#FF4848EC" Height="50" Canvas.Left="280" Stroke="Black" Canvas.Top="280" Width="50"/>
+        <Ellipse Fill="#FFF4F4F5" Height="50" Canvas.Left="386" Stroke="Black" Canvas.Top="88" Width="50" MouseMove="Ellipse1_MouseMove" MouseDown="Ellipse1_MouseDown" MouseUp="Ellipse1_MouseUp" />
 
 
     </Canvas>
