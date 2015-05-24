@@ -8,7 +8,8 @@
     <Canvas x:Name="can1"  >
         <Label x:Name="lb1" Content="Label" Canvas.Left="468" Canvas.Top="40"/>
         <Label x:Name="lb2" Content="Label" Canvas.Left="565" Canvas.Top="40"/>
-        <Ellipse Fill="#FFF4F4F5" Height="50" Canvas.Left="386" Stroke="Black" Canvas.Top="88" Width="50" MouseMove="Ellipse1_MouseMove" MouseDown="Ellipse1_MouseDown" MouseUp="Ellipse1_MouseUp" />
+        <Ellipse Fill="#FFF4F4F5" Height="50" Canvas.Left="386" Stroke="Black" Canvas.Top="88" Width="50" MouseMove="Ellipse_MouseMove" MouseDown="Ellipse_MouseDown" MouseUp="Ellipse_MouseUp" />
+        <Rectangle Fill="#FFF4F4F5" Height="50" Canvas.Left="519" Stroke="Black" Canvas.Top="315" Width="49" MouseDown="Rectangle_MouseDown" MouseUp="Rectangle_MouseUp" MouseMove="Rectangle_MouseMove"/>
 
 
     </Canvas>
