@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 namespace WpfApplication1
 {
+    //i
     /// <summary>
     /// MainWindow.xaml 的互動邏輯
     /// </summary>
