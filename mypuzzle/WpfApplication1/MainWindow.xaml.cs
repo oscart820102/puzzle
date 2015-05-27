@@ -24,7 +24,7 @@ namespace WpfApplication1
         public MainWindow()
         {
             InitializeComponent();
-            creatpuzzle(5, 5);
+            creatpuzzle(5,6);
             
         }
 
