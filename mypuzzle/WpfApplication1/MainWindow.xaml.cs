@@ -25,6 +25,7 @@ namespace WpfApplication1
         {
             InitializeComponent();
             creatpuzzle(5,6);
+    
             
         }
 
@@ -35,24 +36,30 @@ namespace WpfApplication1
             switch (x) { 
                 case 1:
                     brush = new ImageBrush(new BitmapImage(new Uri("picture/gold.png", UriKind.Relative)));
+                    gold++;
                     break;
                 case 2:
                     brush = new ImageBrush(new BitmapImage(new Uri("picture/dark.png", UriKind.Relative)));
+                    dark++;
                     break;
                 case 3:
                     brush = new ImageBrush(new BitmapImage(new Uri("picture/fire.png", UriKind.Relative)));
+                    fire++;
                     break;
                 case 4:
                     brush = new ImageBrush(new BitmapImage(new Uri("picture/water.png", UriKind.Relative)));
+                    water++;
                     break;
                 case 5:
                      brush = new ImageBrush(new BitmapImage(new Uri("picture/wood.png", UriKind.Relative)));
-                    break;
+                     wood++;
+                     break;
                 case 0:
                     brush = new ImageBrush(new BitmapImage(new Uri("picture/heart.png", UriKind.Relative)));
+                    heart++;
                     break;
                 default:
-                    MessageBox.Show("not 1 2");
+                    MessageBox.Show("no puzzle!!!!!");
                     break;
             }
          //   ImageBrush brush = new ImageBrush(new BitmapImage(new Uri("picture/gold.png", UriKind.Relative)));
@@ -63,7 +70,7 @@ namespace WpfApplication1
         
         private void creatpuzzle(int x, int y) 
         {
-            
+            wood = 0; water = 0; fire = 0; gold = 0; dark = 0; heart = 0;
             for (int i = 0; i < x; i++) {
                 for (int j = 0; j < y; j++) {
                     Rectangle rec = new Rectangle()
@@ -84,8 +91,16 @@ namespace WpfApplication1
                     can1.Children.Add(rec);
                 }
             }
+            lbdark.Content = "暗珠: " + dark + "顆";
+            lbwater.Content = "水珠: " + water + "顆";
+            lbfire.Content = "火珠: " + fire + "顆";
+            lbwood.Content = "木珠: " + wood + "顆";
+            lbgold.Content = "光珠: " + gold + "顆";
+            lbheart.Content = "心珠: " + heart + "顆";
+            lbcombo.Content = "最大combo數: " + ((dark / 3) + (water / 3) + (fire / 3) + (wood / 3) + (gold / 3) + (heart / 3));
         }
 
+        int wood = 0, water = 0, fire = 0, gold = 0,dark=0,heart=0;
 
         double mouseX;
         double mouseY;
@@ -250,7 +265,7 @@ namespace WpfApplication1
 
         private void btrand_Click(object sender, RoutedEventArgs e)
         {
-            can1.Children.RemoveRange(4,34); //從第5個產生的物件開始移除(移除拼圖)
+            can1.Children.RemoveRange(11,34); //從第5個產生的物件開始移除(移除拼圖)
             creatpuzzle(5, 6);
         }
 
