@@ -113,6 +113,7 @@ namespace WpfApplication1
         {
 
             Rectangle item = sender as Rectangle;
+            Canvas.SetZIndex(item, 100);  //移動的物體總是在最上方
             mouseX = e.GetPosition(null).X;
             mouseY = e.GetPosition(null).Y;
             item.CaptureMouse();
@@ -126,6 +127,7 @@ namespace WpfApplication1
         {
             Rectangle item = sender as Rectangle;
             item.ReleaseMouseCapture();
+            Canvas.SetZIndex(item, 0);  //物體位置回歸水平
             mouseX = -1;
             mouseY = -1;
             item.SetValue(Canvas.LeftProperty, oldpositionX); //轉完自動歸位圓圈
@@ -176,6 +178,7 @@ namespace WpfApplication1
         {
            
             Ellipse item = sender as Ellipse;
+            Canvas.SetZIndex(item, 100);  //移動的物體總是在最上方
             mouseX = e.GetPosition(null).X;
             mouseY = e.GetPosition(null).Y;
             item.CaptureMouse();
@@ -188,6 +191,7 @@ namespace WpfApplication1
         private void Ellipse_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Ellipse item = sender as Ellipse;
+            Canvas.SetZIndex(item, 0);  //物體位置回歸水平
             item.ReleaseMouseCapture();
             mouseX = -1;
             mouseY = -1;
