@@ -28,7 +28,38 @@ namespace WpfApplication1
             
         }
 
-
+        private void randomfill(Rectangle rec) {
+            Random rnd = new Random(Guid.NewGuid().GetHashCode());
+            int x = rnd.Next(6);
+            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri("picture/gold.png", UriKind.Relative)));
+            switch (x) { 
+                case 1:
+                    brush = new ImageBrush(new BitmapImage(new Uri("picture/gold.png", UriKind.Relative)));
+                    break;
+                case 2:
+                    brush = new ImageBrush(new BitmapImage(new Uri("picture/dark.png", UriKind.Relative)));
+                    break;
+                case 3:
+                    brush = new ImageBrush(new BitmapImage(new Uri("picture/fire.png", UriKind.Relative)));
+                    break;
+                case 4:
+                    brush = new ImageBrush(new BitmapImage(new Uri("picture/water.png", UriKind.Relative)));
+                    break;
+                case 5:
+                     brush = new ImageBrush(new BitmapImage(new Uri("picture/wood.png", UriKind.Relative)));
+                    break;
+                case 0:
+                    brush = new ImageBrush(new BitmapImage(new Uri("picture/heart.png", UriKind.Relative)));
+                    break;
+                default:
+                    MessageBox.Show("not 1 2");
+                    break;
+            }
+         //   ImageBrush brush = new ImageBrush(new BitmapImage(new Uri("picture/gold.png", UriKind.Relative)));
+            rec.Fill = brush;
+           
+            return ;
+        }
         
         private void creatpuzzle(int x, int y) 
         {
@@ -40,12 +71,13 @@ namespace WpfApplication1
                         Height = 50,
                         Width = 50,
                         Stroke= new SolidColorBrush(Colors.Black),
-                        Fill = new SolidColorBrush(Colors.Gray)
+                      
                     };
-
-                       rec.MouseDown +=  new MouseButtonEventHandler(this.Rectangle_MouseDown); 
-                       rec.MouseMove +=  new MouseEventHandler(this.Rectangle_MouseMove);
-                      rec.MouseUp += new MouseButtonEventHandler(this.Rectangle_MouseUp);
+                    randomfill(rec);
+               
+                    rec.MouseDown +=  new MouseButtonEventHandler(this.Rectangle_MouseDown); 
+                    rec.MouseMove +=  new MouseEventHandler(this.Rectangle_MouseMove);
+                    rec.MouseUp += new MouseButtonEventHandler(this.Rectangle_MouseUp);
                     Canvas.SetTop(rec, 40 +i*55);
                     Canvas.SetLeft(rec, 40+ j*55);
                     
@@ -197,7 +229,7 @@ namespace WpfApplication1
             //    rect.Fill = new SolidColorBrush(Colors.Red);
               
 
-                if (currentshapX > oldpositionX + 30 || currentshapX < oldpositionX - 30 || currentshapY > oldpositionY + 30 || currentshapY < oldpositionY - 30)
+                if (currentshapX > oldpositionX + 40 || currentshapX < oldpositionX - 40 || currentshapY > oldpositionY + 40 || currentshapY < oldpositionY - 40)
                 {
                     double tempX, tempY;
                     tempX = (double)rect.GetValue(Canvas.LeftProperty);
