@@ -248,5 +248,11 @@ namespace WpfApplication1
             return HitTestResultBehavior.Continue;
         }
 
+        private void btrand_Click(object sender, RoutedEventArgs e)
+        {
+            can1.Children.RemoveRange(4,34); //從第5個產生的物件開始移除(移除拼圖)
+            creatpuzzle(5, 6);
+        }
+
     }
 }
