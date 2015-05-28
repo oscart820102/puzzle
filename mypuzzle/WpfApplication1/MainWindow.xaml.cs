@@ -30,30 +30,40 @@ namespace WpfApplication1
         private void randomfill(Rectangle rec) {
             Random rnd = new Random(Guid.NewGuid().GetHashCode());
             int x = rnd.Next(6);
-            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri("picture/gold.png", UriKind.Relative)));
+        
+            ImageBrush brush = null ;
+            //問助教為什麼要用image 不能用new的   ImageBrush brush = new ImageBrush(new BitmapImage(new Uri("images/gold.png", UriKind.Relative)));
+
+      
             switch (x) { 
                 case 1:
-                    brush = new ImageBrush(new BitmapImage(new Uri("picture/gold.png", UriKind.Relative)));
+                    image1.Source = new BitmapImage(new Uri("images/gold.png", UriKind.Relative));
+                    brush = new ImageBrush(image1.Source);
                     gold++;
                     break;
                 case 2:
-                    brush = new ImageBrush(new BitmapImage(new Uri("picture/dark.png", UriKind.Relative)));
+                    image1.Source = new BitmapImage(new Uri("images/dark.png", UriKind.Relative));
+                    brush = new ImageBrush(image1.Source);
                     dark++;
                     break;
                 case 3:
-                    brush = new ImageBrush(new BitmapImage(new Uri("picture/fire.png", UriKind.Relative)));
+                    image1.Source = new BitmapImage(new Uri("images/fire.png", UriKind.Relative));
+                    brush = new ImageBrush(image1.Source);
                     fire++;
                     break;
                 case 4:
-                    brush = new ImageBrush(new BitmapImage(new Uri("picture/water.png", UriKind.Relative)));
+                    image1.Source = new BitmapImage(new Uri("images/water.png", UriKind.Relative));
+                    brush = new ImageBrush(image1.Source);
                     water++;
                     break;
                 case 5:
-                     brush = new ImageBrush(new BitmapImage(new Uri("picture/wood.png", UriKind.Relative)));
+                    image1.Source = new BitmapImage(new Uri("images/wood.png", UriKind.Relative));
+                    brush = new ImageBrush(image1.Source);
                      wood++;
                      break;
                 case 0:
-                    brush = new ImageBrush(new BitmapImage(new Uri("picture/heart.png", UriKind.Relative)));
+                    image1.Source = new BitmapImage(new Uri("images/heart.png", UriKind.Relative));
+                    brush = new ImageBrush(image1.Source);
                     heart++;
                     break;
                 default:

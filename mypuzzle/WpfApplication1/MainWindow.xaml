@@ -16,6 +16,7 @@
         <Label x:Name="lbdark" Content="Label" Canvas.Left="478" Canvas.Top="133"/>
         <Label x:Name="lbheart" Content="Label" Canvas.Left="478" Canvas.Top="102"/>
         <Label x:Name="lbcombo" Content="Label" Canvas.Left="478" Canvas.Top="237"/>
+        <Image x:Name="image1" Height="100" Canvas.Left="612" Canvas.Top="181" Width="100" Visibility="Hidden"/>
 
 
 
