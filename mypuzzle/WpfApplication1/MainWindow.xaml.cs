@@ -30,41 +30,9 @@ namespace WpfApplication1
         }
 
         private void randomfill(Rectangle rec) {
-            Random rnd = new Random(Guid.NewGuid().GetHashCode());
-            int x = rnd.Next(6);
-            ImageBrush brush = new ImageBrush(new BitmapImage(new Uri("picture/gold.png", UriKind.Relative)));
-            switch (x) { 
-                case 1:
-                    brush = new ImageBrush(new BitmapImage(new Uri("picture/gold.png", UriKind.Relative)));
-                    gold++;
-                    break;
-                case 2:
-                    brush = new ImageBrush(new BitmapImage(new Uri("picture/dark.png", UriKind.Relative)));
-                    dark++;
-                    break;
-                case 3:
-                    brush = new ImageBrush(new BitmapImage(new Uri("picture/fire.png", UriKind.Relative)));
-                    fire++;
-                    break;
-                case 4:
-                    brush = new ImageBrush(new BitmapImage(new Uri("picture/water.png", UriKind.Relative)));
-                    water++;
-                    break;
-                case 5:
-                     brush = new ImageBrush(new BitmapImage(new Uri("picture/wood.png", UriKind.Relative)));
-                     wood++;
-                     break;
-                case 0:
-                    brush = new ImageBrush(new BitmapImage(new Uri("picture/heart.png", UriKind.Relative)));
-                    heart++;
-                    break;
-                default:
-                    MessageBox.Show("no puzzle!!!!!");
-                    break;
-            }
-         //   ImageBrush brush = new ImageBrush(new BitmapImage(new Uri("picture/gold.png", UriKind.Relative)));
-            rec.Fill = brush;
-           
+         
+       
+            rec.Fill = new SolidColorBrush(Colors.Red);
             return ;
         }
         
