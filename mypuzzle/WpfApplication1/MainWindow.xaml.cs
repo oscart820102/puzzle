@@ -102,13 +102,14 @@ namespace WpfApplication1
             item.SetValue(Canvas.TopProperty, oldpositionY);  //
         }
 
+        Rectangle CurrentRec = null;
 
         private void Rectangle_MouseMove(object sender, MouseEventArgs e)
         {
             Rectangle item = sender as Rectangle;
             if (item.IsMouseCaptured)
             {
-
+                CurrentRec = item;
                 // Calculate the current position of the object.
                 double deltaX = e.GetPosition(null).X - mouseX;
                 double deltaY = e.GetPosition(null).Y - mouseY;
@@ -130,12 +131,12 @@ namespace WpfApplication1
                 mouseY = e.GetPosition(null).Y;
 
                 //將圓形圖轉成幾何圖形
-            //    Geometry g = item.RenderedGeometry;
+                Geometry g = item.RenderedGeometry;
                 //座標位置轉換為視窗的座標
-          //      g.Transform = item.TransformToAncestor(this) as MatrixTransform;
-          //      VisualTreeHelper.HitTest(this, null,
-           //         new HitTestResultCallback(myHitTestResult),
-              //      new GeometryHitTestParameters(g));
+                g.Transform = item.TransformToAncestor(this) as MatrixTransform;
+                VisualTreeHelper.HitTest(this, null,
+                    new HitTestResultCallback(myHitTestResult),
+                    new GeometryHitTestParameters(g));
             }
         }
         
@@ -210,7 +211,7 @@ namespace WpfApplication1
 
         public HitTestResultBehavior myHitTestResult(HitTestResult result)
         {
-            if (result.VisualHit is Rectangle)
+            if (result.VisualHit is Rectangle && result.VisualHit!= CurrentRec)
             {
                 Rectangle rect = result.VisualHit as Rectangle;
             //    rect.Fill = new SolidColorBrush(Colors.Red);
