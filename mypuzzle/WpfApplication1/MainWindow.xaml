@@ -8,7 +8,6 @@
     <Canvas x:Name="can1"  >
         <Label x:Name="lb1" Content="Label" Canvas.Left="558" Canvas.Top="40"/>
         <Label x:Name="lb2" Content="Label" Canvas.Left="633" Canvas.Top="40"/>
-        <Ellipse Fill="#FFF4F4F5" Height="50" Canvas.Left="386" Stroke="Black" Canvas.Top="88" Width="50" MouseMove="Ellipse_MouseMove" MouseDown="Ellipse_MouseDown" MouseUp="Ellipse_MouseUp" />
         <Button x:Name="btrand" Content="隨機產生盤面" Canvas.Left="573" Canvas.Top="102" Width="75" Click="btrand_Click"/>
         <Label x:Name="lbwood" Content="Label" Canvas.Left="478" Canvas.Top="40"/>
         <Label x:Name="lbfire" Content="Label" Canvas.Left="478" Canvas.Top="71"/>
