@@ -153,7 +153,7 @@ namespace WpfApplication1
 
             System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
             CurrentRec = item;
-           item.Fill = new SolidColorBrush(Colors.Red);  //delete
+           item.Fill = new SolidColorBrush(Colors.Red);  //delete later, just for mouse test
             //mouse test
             mOldX = System.Windows.Forms.Cursor.Position.X;
             mOldY = System.Windows.Forms.Cursor.Position.Y;
