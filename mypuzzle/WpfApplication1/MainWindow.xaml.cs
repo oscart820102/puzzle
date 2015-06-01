@@ -30,17 +30,18 @@ namespace WpfApplication1
     public partial class MainWindow : Window
     {
            // timer顯示座標
-            DispatcherTimer timer,timersec;
+            DispatcherTimer timersec,timershow;
+            MouseButtonEventArgs curmouse = null;
             bool changemode = false;             //手動變換珠子顏色 判斷是不是轉珠模式
             int wood = 0, water = 0, fire = 0, gold = 0, dark = 0, heart = 0;
 
         public MainWindow()
         {
               // timer顯示座標
-            DispatcherTimer timer,timersec;
-            timer = new DispatcherTimer();
-            timer.Tick += timer_1Tick;
-            timer.Start();
+            DispatcherTimer Postiontimer;
+            Postiontimer = new DispatcherTimer();
+            Postiontimer.Tick += Postiontimer_1Tick;
+            Postiontimer.Start();
             //          
             InitializeComponent();
             creatpuzzle(5,6);               
@@ -146,10 +147,19 @@ namespace WpfApplication1
             {
                 //timer
                 timersec = new DispatcherTimer();
-                timersec.Interval = TimeSpan.FromSeconds(1.0);
+                timersec.Interval = TimeSpan.FromSeconds(5.0);
                 timersec.Tick += timersec_Tick;
                 timersec.Start();
                 //
+                timershow = new DispatcherTimer();
+                timershow.Interval = TimeSpan.FromSeconds(1.0);
+                timershow.Tick += timershow_Tick;
+                this.lbtimer.Content = "0";
+                timershow.Start();
+                //
+
+                curmouse = e;
+
                 System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
                 CurrentRec = item;  //記錄下要移動的正方形(hittest才可以判斷)
                 // item.Fill = new SolidColorBrush(Colors.Red);  //delete later, just for mouse test
@@ -167,10 +177,12 @@ namespace WpfApplication1
 
         private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
         {
-
-            if (!changemode)  //如果是上色模式就不執行
+            System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
+            if (!changemode && item.IsMouseCaptured)  //如果是上色模式就不執行
             {
-                System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
+                
+                timershow.Stop();
+                timersec.Stop();
                 item.ReleaseMouseCapture();
                 Canvas.SetZIndex(item, 0);  //物體位置回歸水平
                 mouseX = -1;
@@ -256,14 +268,25 @@ namespace WpfApplication1
 
         void timersec_Tick(object sender, EventArgs e)
         {
-            this.lbtimer.Content = (int.Parse(this.lbtimer.Content.ToString()) + 1).ToString();
-            //if (int.Parse(this.lbtimer.Content.ToString()) == 5) {
-            //    this.lbtimer.Content = "0";               
-            //    //this.lbtimer.Content = "0";
-            //}
+            // this.lbtimer.Content = (int.Parse(this.lbtimer.Content.ToString()) + 1).ToString();
+            timersec.Stop();
+            timershow.Stop();
+            this.lbtimer.Content += "秒到了";
+            Rectangle_MouseUp(CurrentRec, curmouse);
         }
 
-        private void timer_1Tick(object sender, EventArgs e)
+        private void timershow_Tick(object sender, EventArgs e)
+        {
+            this.lbtimer.Content = (int.Parse(this.lbtimer.Content.ToString()) + 1).ToString();
+            if (int.Parse(this.lbtimer.Content.ToString()) == 5)
+            {
+                timershow.Stop();
+                this.lbtimer.Content += "秒到了";
+
+            }
+        }
+
+        private void Postiontimer_1Tick(object sender, EventArgs e)
         {
             this.plabel.Content = "(" + System.Windows.Forms.Cursor.Position.X.ToString() + "," + System.Windows.Forms.Cursor.Position.Y.ToString() + ")";
         }
