@@ -30,22 +30,40 @@ namespace WpfApplication1
     /// </summary>
     public partial class MainWindow : Window
     {
+           // timer顯示座標
+            DispatcherTimer timer,timersec;
+           
+            //
         public MainWindow()
         {
-            // timer顯示座標
-            DispatcherTimer timer;
+              // timer顯示座標
+            DispatcherTimer timer,timersec;
             timer = new DispatcherTimer();
             timer.Tick += timer_1Tick;
+            
+          
             timer.Start();
             //
+          
             InitializeComponent();
             creatpuzzle(5,6);               
+        }
+
+        void timersec_Tick(object sender, EventArgs e)
+        {
+            this.lbtimer.Content = (int.Parse(this.lbtimer.Content.ToString()) + 1).ToString();
+            //if (int.Parse(this.lbtimer.Content.ToString()) == 5) {
+            //    this.lbtimer.Content = "0";
+                
+            //    //this.lbtimer.Content = "0";
+            //}
         }
 
         private void timer_1Tick(object sender, EventArgs e)
         {
 
             this.plabel.Content = "(" + System.Windows.Forms.Cursor.Position.X.ToString() + "," + System.Windows.Forms.Cursor.Position.Y.ToString() + ")";
+           
         }
 
        
@@ -149,8 +167,12 @@ namespace WpfApplication1
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
-          
-
+            //timer
+            timersec = new DispatcherTimer();
+            timersec.Interval = TimeSpan.FromSeconds(1.0);
+            timersec.Tick += timersec_Tick;
+            timersec.Start();
+            //
             System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
             CurrentRec = item;
            item.Fill = new SolidColorBrush(Colors.Red);  //delete later, just for mouse test
@@ -171,6 +193,8 @@ namespace WpfApplication1
 
         private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            
+
             System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
             item.ReleaseMouseCapture();
             Canvas.SetZIndex(item, 0);  //物體位置回歸水平
@@ -193,6 +217,8 @@ namespace WpfApplication1
             System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
             if (item.IsMouseCaptured)
             {
+         
+
 
                 // Calculate the current position of the object.
                 double deltaX = e.GetPosition(null).X - mouseX;
@@ -244,7 +270,7 @@ namespace WpfApplication1
 
         private void btrand_Click(object sender, RoutedEventArgs e)
         {
-            can1.Children.RemoveRange(15,33); //從第10個產生的物件開始移除(移除拼圖)
+            can1.Children.RemoveRange(16,33); //從第10個產生的物件開始移除(移除拼圖)
             creatpuzzle(5, 6);
         }
 
