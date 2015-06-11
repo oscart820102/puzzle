@@ -252,8 +252,8 @@ namespace WpfApplication1
 
         private void btmove_Click(object sender, RoutedEventArgs e)
         {           
-            Mouse.MoveTo(tbx.Text, tby.Text);
-            Mouse.LeftClick();           
+           // Mouse.MoveTo(tbx.Text, tby.Text);
+           // Mouse.LeftClick();           
         }
 
         private void btchange_color_Click(object sender, RoutedEventArgs e)
@@ -336,71 +336,135 @@ namespace WpfApplication1
         public const int GCS_COMPSTR = 0x0008;
     }
 
-    public static partial class Mouse
+    public static class Mouse
     {
+        [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 28)]
+        public struct INPUT
+        {
+            [FieldOffset(0)]
+            public Mouse.INPUTTYPE dwType;
+            [FieldOffset(4)]
+            public Mouse.MOUSEINPUT mi;
+            [FieldOffset(4)]
+            public Mouse.KEYBOARDINPUT ki;
+            [FieldOffset(4)]
+            public Mouse.HARDWAREINPUT hi;
+        }
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct MOUSEINPUT
+        {
+            public int dx;
+            public int dy;
+            public int mouseData;
+            public Mouse.MOUSEFLAG dwFlags;
+            public int time;
+            public IntPtr dwExtraInfo;
+        }
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct KEYBOARDINPUT
+        {
+            public short wVk;
+            public short wScan;
+            public Mouse.KEYBOARDFLAG dwFlags;
+            public int time;
+            public IntPtr dwExtraInfo;
+        }
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public struct HARDWAREINPUT
+        {
+            public int uMsg;
+            public short wParamL;
+            public short wParamH;
+        }
+        public enum INPUTTYPE
+        {
+            Mouse,
+            Keyboard,
+            Hardware
+        }
+        [Flags]
+        public enum MOUSEFLAG
+        {
+            MOVE = 1,
+            LEFTDOWN = 2,
+            LEFTUP = 4,
+            RIGHTDOWN = 8,
+            RIGHTUP = 16,
+            MIDDLEDOWN = 32,
+            MIDDLEUP = 64,
+            XDOWN = 128,
+            XUP = 256,
+            VIRTUALDESK = 1024,
+            WHEEL = 2048,
+            ABSOLUTE = 32768
+        }
+        [Flags]
+        public enum KEYBOARDFLAG
+        {
+            EXTENDEDKEY = 1,
+            KEYUP = 2,
+            UNICODE = 4,
+            SCANCODE = 8
+        }
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern int SendInput(int cInputs, ref Mouse.INPUT pInputs, int cbSize);
         [DllImport("User32")]
-        public extern static void mouse_event(int dwFlags, int dx, int dy, int dwData, IntPtr dwExtraInfo);
-        static public void DragTo(string sor_X, string sor_Y, string des_X, string des_Y)
-        {
-            MoveTo(sor_X, sor_Y);
-            LeftDown();
-            Thread.Sleep(200);
-            MoveTo(des_X, des_Y);
-            LeftUp();
-        }
-        /// <summary>
-        /// 模擬壓住滑鼠左鍵。
-        /// </summary>
-        /// 
-        static public void MoveTo(string tx, string ty)
-        {
-            int x, y;
-            int.TryParse(tx, out x);
-            int.TryParse(ty, out y);
-            System.Windows.Forms.Cursor.Position = new System.Drawing.Point(x, y);
-        }
-
+        public static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, IntPtr dwExtraInfo);
         public static void LeftDown()
         {
-            mouse_event(NativeContansts.MEF_LEFTDOWN, 0, 0, 0, IntPtr.Zero);
+            Mouse.mouse_event(2, 0, 0, 0, IntPtr.Zero);
         }
-        /// <summary>
-        /// 模擬釋放滑鼠左鍵。
-        /// </summary>
         public static void LeftUp()
         {
-            mouse_event(NativeContansts.MEF_LEFTUP, 0, 0, 0, IntPtr.Zero);
+            Mouse.mouse_event(4, 0, 0, 0, IntPtr.Zero);
         }
-        /// <summary>
-        /// 模擬點擊滑鼠左鍵。
-        /// </summary>
-        public static void LeftClick()
+        public static void DragTo(int sor_X, int sor_Y, int des_X, int des_Y)
         {
-            LeftDown();
-            LeftUp();
+            System.Windows.Forms.Cursor.Position = new System.Drawing.Point(sor_X, sor_Y);
+            Mouse.LeftDown();
+            Thread.Sleep(200);
+            System.Windows.Forms.Cursor.Position =  new System.Drawing.Point(des_X, des_Y);
+            Mouse.LeftUp();
         }
-
-        /// <summary>
-        /// 模擬壓住滑鼠右鍵。
-        /// </summary>
-        public static void RightDown()
+        public static void LeftClick(int sor_X, int sor_Y)
         {
-            mouse_event(NativeContansts.MEF_RIGHTDOWN, 0, 0, 0, IntPtr.Zero);
+            System.Windows.Forms.Cursor.Position = new System.Drawing.Point(sor_X, sor_Y);
+            Mouse.LeftDown();
+            Thread.Sleep(20);
+            Mouse.LeftUp();
         }
-        /// <summary>
-        /// 模擬釋放滑鼠右鍵。
-        /// </summary>
-        public static void RightUp()
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, UIntPtr wParam, IntPtr lParam);
+        [DllImport("user32.dll")]
+        private static extern int SendMessage(IntPtr hwnd, uint wMsg, int wParam, int lParam);
+        [DllImport("user32.dll")]
+        private static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, UIntPtr wParam, IntPtr lParam);
+        [DllImport("user32.dll")]
+        private static extern int PostMessage(IntPtr hwnd, uint wMsg, int wParam, int lParam);
+        public static int MakeLParam(int LoWord, int HiWord)
         {
-            mouse_event(NativeContansts.MEF_RIGHTUP, 0, 0, 0, IntPtr.Zero);
+            return HiWord << 16 | (LoWord & 65535);
         }
-        /// <summary>
-        /// 模擬點擊滑鼠右鍵。
-        /// </summary>
-        public static void RightClick()
+        public static void tosleftdown(IntPtr hwnd, int sor_X, int sor_Y)
         {
-            RightDown();
-            RightUp();
+            uint wMsg = 513u;
+            int lParam = Mouse.MakeLParam(sor_X, sor_Y);
+            Mouse.PostMessage(hwnd, wMsg, 0, lParam);
+            Thread.Sleep(50);
+        }
+        public static void toslefup(IntPtr hwnd, int sor_X, int sor_Y)
+        {
+            uint wMsg = 514u;
+            int lParam = Mouse.MakeLParam(sor_X, sor_Y);
+            Mouse.PostMessage(hwnd, wMsg, 0, lParam);
+            Thread.Sleep(20);
+        }
+        public static void tosdrag(IntPtr hwnd, int sor_X, int sor_Y, int time)
+        {
+            uint wMsg = 512u;
+            int lParam = Mouse.MakeLParam(sor_X, sor_Y);
+            Mouse.PostMessage(hwnd, wMsg, 514, lParam);
+            Thread.Sleep(time);
         }
     }
 
