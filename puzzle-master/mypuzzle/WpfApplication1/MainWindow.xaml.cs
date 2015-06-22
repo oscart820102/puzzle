@@ -51,7 +51,8 @@ namespace WpfApplication1
         }
         
         private void creatpuzzle(int x, int y) //動態生成珠子
-        {          
+        {
+            Array.Clear(zero, 0, zero.Length);
             wood = 0; water = 0; fire = 0; gold = 0; dark = 0; heart = 0;
             for (int i = 0; i < x; i++) {
                 for (int j = 0; j < y; j++) {
@@ -86,7 +87,7 @@ namespace WpfApplication1
             ImageBrush brush = null;
             //問助教為什麼要用image 不能用new的   ImageBrush brush = new ImageBrush(new BitmapImage(new Uri("images/gold.png", UriKind.Relative)));      
             switch (x)
-            {
+            {//金1 暗2 火3 水4 木5 心6
                 case 1:
                     image1.Source = new BitmapImage(new Uri("images/gold.png", UriKind.Relative));
                     brush = new ImageBrush(image1.Source);
@@ -124,7 +125,7 @@ namespace WpfApplication1
                     orb[a, b] = 6;
                     break;
                 default:
-                    MessageBox.Show("no puzzle!!!!!");
+                    MessageBox.Show("no rpuzzle!!!!!");
                     break;
             }
             //   ImageBrush brush = new ImageBrush(new BitmapImage(new Uri("picture/gold.png", UriKind.Relative)));
@@ -204,15 +205,15 @@ namespace WpfApplication1
                     }
                 }
             }
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 6; j++)
-                {
-                    textbox1.Text += temp[i, j].ToString() + " ";
-                }
-                textbox1.Text += "\n";
-            }
-            textbox1.Text += "\n";
+            //for (int i = 0; i < 5; i++)   //印出combo狀態
+            //{
+            //    for (int j = 0; j < 6; j++)
+            //    {
+            //        textbox1.Text += temp[i, j].ToString() + " ";
+            //    }
+            //    textbox1.Text += "\n";
+            //}
+            //textbox1.Text += "\n";
             count = combocount(temp);
             if (judge == true)
                 return find_combo(temp2) + count;
@@ -280,8 +281,33 @@ namespace WpfApplication1
                 lb2.Content = y;
                 if (zero[(int)x, (int)y] == 0)
                 {
-                    zero[(int)x, (int)y] = 1;
+                    zero[(int)x, (int)y] = 1;                   
+                    switch (orb[(int)x, (int)y])
+                    {
+                        case 6:                      
+                            heart--;
+                            break;
+                        case 1:           
+                            gold--;
+                            break;
+                        case 2:
+                            dark--;
+                            break;
+                        case 3:
+                            fire--;
+                            break;
+                        case 4:
+                            water--;
+                            break;
+                        case 5:
+                            wood--;
+                            break;
+                        default:
+                          //  MessageBox.Show("no NUBER!!!!!");
+                            break;
+                    }
                     orb[(int)x, (int)y] = 6;
+                    heart++;
                 }
                 switch (orb[(int)x, (int)y])
                 {
@@ -334,7 +360,7 @@ namespace WpfApplication1
                         orb[(int)x, (int)y] = 6;
                         break;
                     default:
-                        MessageBox.Show("no puzzle!!!!!");
+                     //   MessageBox.Show("no puzzle!!!!!");
                         break;
                 }
             lbdark.Content = "暗珠: " + dark + "顆";
@@ -463,7 +489,7 @@ namespace WpfApplication1
 
         private void btrand_Click(object sender, RoutedEventArgs e)
         {
-            can1.Children.RemoveRange(18,35); //從第18個產生的物件開始移除(移除拼圖)
+            can1.Children.RemoveRange(19,36); //從第18個產生的物件開始移除(移除拼圖)
             creatpuzzle(5, 6);
         }
 
@@ -472,11 +498,13 @@ namespace WpfApplication1
         private void btchange_color_Click(object sender, RoutedEventArgs e)
         {
             changemode = true;
+            lb_Mode.Content = "換色模式";
         }
 
         private void btspin_mode_Click(object sender, RoutedEventArgs e)
         {
             changemode = false;
+            lb_Mode.Content = "轉珠模式";
         }
 
         void timersec_Tick(object sender, EventArgs e)
@@ -502,6 +530,7 @@ namespace WpfApplication1
 
         private void btn_combo_Click(object sender, RoutedEventArgs e)
         {
+            textbox1.Clear();
             int count;
             count = find_combo(orb);
             textbox1.Text += "總共有 " + count.ToString() + " Combo";
