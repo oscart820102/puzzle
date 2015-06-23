@@ -30,44 +30,46 @@ namespace WpfApplication1
     /// </summary>
     public partial class MainWindow : Window
     {
-           // timer顯示座標
-            DispatcherTimer timersec,timershow;
-            MouseButtonEventArgs curmouse = null;
-            bool changemode = false;             //手動變換珠子顏色 判斷是不是轉珠模式
-            int wood = 0, water = 0, fire = 0, gold = 0, dark = 0, heart = 0;
-            int[,] orb = new int[5,6];
-            int[,] zero = new int[5, 6] { { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 } };
+        // timer顯示座標
+        DispatcherTimer timersec, timershow;
+        MouseButtonEventArgs curmouse = null;
+        bool changemode = false;             //手動變換珠子顏色 判斷是不是轉珠模式
+        int wood = 0, water = 0, fire = 0, gold = 0, dark = 0, heart = 0;
+        int[,] orb = new int[5, 6];
+        int[,] zero = new int[5, 6] { { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 } };
 
         public MainWindow()
         {
-              // timer顯示座標
+            // timer顯示座標
             DispatcherTimer Postiontimer;
             Postiontimer = new DispatcherTimer();
             Postiontimer.Tick += Postiontimer_1Tick;
             Postiontimer.Start();
             //          
             InitializeComponent();
-            creatpuzzle(5,6);               
+            creatpuzzle(5, 6);
         }
-        
+
         private void creatpuzzle(int x, int y) //動態生成珠子
         {
             Array.Clear(zero, 0, zero.Length);
             wood = 0; water = 0; fire = 0; gold = 0; dark = 0; heart = 0;
-            for (int i = 0; i < x; i++) {
-                for (int j = 0; j < y; j++) {
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < y; j++)
+                {
                     System.Windows.Shapes.Rectangle rec = new System.Windows.Shapes.Rectangle()
                     {
                         Height = 50,
                         Width = 50,
-                        Stroke= new SolidColorBrush(Colors.Black),                      
+                        Stroke = new SolidColorBrush(Colors.Black),
                     };
-                    randomfill(i , j , rec);    //隨機給珠子顏色           
-                    rec.MouseDown +=  new MouseButtonEventHandler(this.Rectangle_MouseDown); 
-                    rec.MouseMove +=  new MouseEventHandler(this.Rectangle_MouseMove);
+                    randomfill(i, j, rec);    //隨機給珠子顏色           
+                    rec.MouseDown += new MouseButtonEventHandler(this.Rectangle_MouseDown);
+                    rec.MouseMove += new MouseEventHandler(this.Rectangle_MouseMove);
                     rec.MouseUp += new MouseButtonEventHandler(this.Rectangle_MouseUp);
-                    Canvas.SetTop(rec, 40 +i*55);
-                    Canvas.SetLeft(rec, 40+ j*55);                    
+                    Canvas.SetTop(rec, 40 + i * 55);
+                    Canvas.SetLeft(rec, 40 + j * 55);
                     can1.Children.Add(rec);
                 }
             }
@@ -80,7 +82,7 @@ namespace WpfApplication1
             lbcombo.Content = "最大combo數: " + ((dark / 3) + (water / 3) + (fire / 3) + (wood / 3) + (gold / 3) + (heart / 3));
         }
 
-        private void randomfill(int a , int b , System.Windows.Shapes.Rectangle rec)//隨機上色
+        private void randomfill(int a, int b, System.Windows.Shapes.Rectangle rec)//隨機上色
         {
             Random rnd = new Random(Guid.NewGuid().GetHashCode());
             int x = rnd.Next(6);
@@ -136,7 +138,7 @@ namespace WpfApplication1
         double mouseX;
         double mouseY;
         double oldpositionX;    //圖形原本位置
-        double oldpositionY;    
+        double oldpositionY;
         double currentshapX;    //圖形隨著滑鼠移動的位置
         double currentshapY;
         System.Windows.Shapes.Rectangle CurrentRec = null;  //宣告目前移動的正方形
@@ -146,33 +148,39 @@ namespace WpfApplication1
             //int[,] ori = orb;
             int count = 0;
             bool judge = false;
-            int[,] temp = new int[5 , 6];
+            int[,] temp = new int[5, 6];
             // 1. filter all 3+ consecutives.
             //  (a) horizontals
-            for (var i = 0; i < 5; ++ i) {
+            for (var i = 0; i < 5; ++i)
+            {
                 var prev_1_orb = 19;
                 var prev_2_orb = 19;
-                for (var j = 0; j < 6; ++ j) {
-                    var cur_orb = ori[i , j];
-                    if (prev_1_orb == prev_2_orb && prev_2_orb == cur_orb && cur_orb != 19 && cur_orb != 29) {
-                        temp[i , j] = cur_orb;
-                        temp[i , j-1] = cur_orb;
-                        temp[i , j-2] = cur_orb;
+                for (var j = 0; j < 6; ++j)
+                {
+                    var cur_orb = ori[i, j];
+                    if (prev_1_orb == prev_2_orb && prev_2_orb == cur_orb && cur_orb != 19 && cur_orb != 29)
+                    {
+                        temp[i, j] = cur_orb;
+                        temp[i, j - 1] = cur_orb;
+                        temp[i, j - 2] = cur_orb;
                     }
                     prev_1_orb = prev_2_orb;
                     prev_2_orb = cur_orb;
                 }
             }
             //  (b) verticals
-            for (var j = 0; j < 6; ++ j) {
+            for (var j = 0; j < 6; ++j)
+            {
                 var prev_1_orb = 19;
                 var prev_2_orb = 19;
-                for (var i = 0; i < 5; ++ i) {
-                    var cur_orb = ori[i , j];
-                    if (prev_1_orb == prev_2_orb && prev_2_orb == cur_orb && cur_orb != 19 && cur_orb != 29) {
-                        temp[i , j] = cur_orb;
-                        temp[i-1 , j] = cur_orb;
-                        temp[i-2 , j] = cur_orb;
+                for (var i = 0; i < 5; ++i)
+                {
+                    var cur_orb = ori[i, j];
+                    if (prev_1_orb == prev_2_orb && prev_2_orb == cur_orb && cur_orb != 19 && cur_orb != 29)
+                    {
+                        temp[i, j] = cur_orb;
+                        temp[i - 1, j] = cur_orb;
+                        temp[i - 2, j] = cur_orb;
                     }
                     prev_1_orb = prev_2_orb;
                     prev_2_orb = cur_orb;
@@ -187,7 +195,7 @@ namespace WpfApplication1
                     textbox1.Text += temp[i, j].ToString() + " ";
                 }
                 textbox1.Text += "\n";
-            }*/ 
+            }*/
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 6; j++)
@@ -232,35 +240,35 @@ namespace WpfApplication1
             for (int i = 0; i < 5; i++)
                 for (int j = 0; j < 6; j++)
                 {
-                    if (ori[i , j] != 0)
+                    if (ori[i, j] != 0)
                     {
                         //combojudge = true;
-                        ori = setzero(ori , i , j);
+                        ori = setzero(ori, i, j);
                         count++;
                     }
                 }
             return count;
         }
 
-        private int[,] setzero(int[,] ori , int i , int j)
+        private int[,] setzero(int[,] ori, int i, int j)
         {
             int temp = ori[i, j];
             ori[i, j] = 0;
             if (i > 0)
-                if (temp == ori[i - 1, j] )
-                    ori =  setzero(ori, i - 1, j);
+                if (temp == ori[i - 1, j])
+                    ori = setzero(ori, i - 1, j);
             if (i < 4)
-                if (temp  == ori[i + 1, j])
-                    ori =  setzero(ori, i + 1, j);
+                if (temp == ori[i + 1, j])
+                    ori = setzero(ori, i + 1, j);
             if (j > 0)
-                if (temp  == ori[i, j - 1])
-                    ori =  setzero(ori, i, j - 1);
+                if (temp == ori[i, j - 1])
+                    ori = setzero(ori, i, j - 1);
             if (j < 5)
-                if (temp  == ori[i, j+1])
-                    ori =  setzero(ori, i, j + 1);
+                if (temp == ori[i, j + 1])
+                    ori = setzero(ori, i, j + 1);
             return ori;
         }
-                                               
+
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -268,26 +276,26 @@ namespace WpfApplication1
             {
                 double x, y;
                 System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
-               // item.Fill = new SolidColorBrush(Colors.Red);  //delete later, just for mouse test
+                // item.Fill = new SolidColorBrush(Colors.Red);  //delete later, just for mouse test
                 ImageBrush brush = null;
                 //image1.Source = new BitmapImage(new Uri("images/dark.png", UriKind.Relative));
                 //brush = new ImageBrush(image1.Source);
                 //item.Fill = brush;
                 y = (double)item.GetValue(Canvas.LeftProperty);
                 x = (double)item.GetValue(Canvas.TopProperty);
-                x = (x - 40) / 55 ;
-                y = (y - 40) / 55 ;
+                x = (x - 40) / 55;
+                y = (y - 40) / 55;
                 lb1.Content = x;
                 lb2.Content = y;
                 if (zero[(int)x, (int)y] == 0)
                 {
-                    zero[(int)x, (int)y] = 1;                   
+                    zero[(int)x, (int)y] = 1;
                     switch (orb[(int)x, (int)y])
                     {
-                        case 6:                      
+                        case 6:
                             heart--;
                             break;
-                        case 1:           
+                        case 1:
                             gold--;
                             break;
                         case 2:
@@ -303,7 +311,7 @@ namespace WpfApplication1
                             wood--;
                             break;
                         default:
-                          //  MessageBox.Show("no NUBER!!!!!");
+                            //  MessageBox.Show("no NUBER!!!!!");
                             break;
                     }
                     orb[(int)x, (int)y] = 6;
@@ -360,16 +368,16 @@ namespace WpfApplication1
                         orb[(int)x, (int)y] = 6;
                         break;
                     default:
-                     //   MessageBox.Show("no puzzle!!!!!");
+                        //   MessageBox.Show("no puzzle!!!!!");
                         break;
                 }
-            lbdark.Content = "暗珠: " + dark + "顆";
-            lbwater.Content = "水珠: " + water + "顆";
-            lbfire.Content = "火珠: " + fire + "顆";
-            lbwood.Content = "木珠: " + wood + "顆";
-            lbgold.Content = "光珠: " + gold + "顆";
-            lbheart.Content = "心珠: " + heart + "顆";
-            lbcombo.Content = "最大combo數: " + ((dark / 3) + (water / 3) + (fire / 3) + (wood / 3) + (gold / 3) + (heart / 3));
+                lbdark.Content = "暗珠: " + dark + "顆";
+                lbwater.Content = "水珠: " + water + "顆";
+                lbfire.Content = "火珠: " + fire + "顆";
+                lbwood.Content = "木珠: " + wood + "顆";
+                lbgold.Content = "光珠: " + gold + "顆";
+                lbheart.Content = "心珠: " + heart + "顆";
+                lbcombo.Content = "最大combo數: " + ((dark / 3) + (water / 3) + (fire / 3) + (wood / 3) + (gold / 3) + (heart / 3));
             }
             else  //轉珠模式
             {
@@ -378,10 +386,11 @@ namespace WpfApplication1
                 {
                     time = 100;
                 }
-                else {
+                else
+                {
                     time = int.Parse(comboTime.SelectionBoxItem.ToString());
                 }
-              
+
                 //MessageBox.Show(comboTime.SelectionBoxItem.ToString());
                 //timer
                 timersec = new DispatcherTimer();
@@ -409,7 +418,7 @@ namespace WpfApplication1
                 oldpositionY = (double)item.GetValue(Canvas.TopProperty);
                 lb1.Content = oldpositionX;
                 lb2.Content = oldpositionY;
-            }            
+            }
         }
 
         private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
@@ -417,7 +426,7 @@ namespace WpfApplication1
             System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
             if (!changemode && item.IsMouseCaptured)  //如果是上色模式就不執行
             {
-                
+
                 timershow.Stop();
                 timersec.Stop();
                 item.ReleaseMouseCapture();
@@ -430,7 +439,7 @@ namespace WpfApplication1
         }
 
         private void Rectangle_MouseMove(object sender, MouseEventArgs e)
-        {                       
+        {
             System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
             if (item.IsMouseCaptured)
             {
@@ -448,28 +457,28 @@ namespace WpfApplication1
                 // Update position global variables.
                 mouseX = e.GetPosition(null).X;
                 mouseY = e.GetPosition(null).Y;
-              //  將正方形形圖轉成幾何圖形
+                //  將正方形形圖轉成幾何圖形
                 Geometry g = item.RenderedGeometry;
-            //    座標位置轉換為視窗的座標
+                //    座標位置轉換為視窗的座標
                 g.Transform = item.TransformToAncestor(this) as MatrixTransform;
                 VisualTreeHelper.HitTest(this, null,
                     new HitTestResultCallback(myHitTestResult),
                     new GeometryHitTestParameters(g));
             }
         }
-           
-  
+
+
         public HitTestResultBehavior myHitTestResult(HitTestResult result)
         {
-            if (result.VisualHit is System.Windows.Shapes.Rectangle && result.VisualHit!= CurrentRec)
+            if (result.VisualHit is System.Windows.Shapes.Rectangle && result.VisualHit != CurrentRec)
             {
                 System.Windows.Shapes.Rectangle rect = result.VisualHit as System.Windows.Shapes.Rectangle;
-            //    rect.Fill = new SolidColorBrush(Colors.Red);            
+                //    rect.Fill = new SolidColorBrush(Colors.Red);            
                 if (currentshapX > oldpositionX + 40 || currentshapX < oldpositionX - 40 || currentshapY > oldpositionY + 40 || currentshapY < oldpositionY - 40)
                 {
                     double tempX, tempY;
                     int temp;
-                    tempX = (double)rect.GetValue(Canvas.LeftProperty);                  
+                    tempX = (double)rect.GetValue(Canvas.LeftProperty);
                     tempY = (double)rect.GetValue(Canvas.TopProperty);
                     rect.SetValue(Canvas.LeftProperty, oldpositionX);
                     rect.SetValue(Canvas.TopProperty, oldpositionY);
@@ -482,14 +491,14 @@ namespace WpfApplication1
                     oldpositionY = tempY;
                     lb1.Content = oldpositionX;
                     lb2.Content = oldpositionY;
-                }            
+                }
             }
             return HitTestResultBehavior.Continue;
         }
 
         private void btrand_Click(object sender, RoutedEventArgs e)
         {
-            can1.Children.RemoveRange(19,36); //從第18個產生的物件開始移除(移除拼圖)
+            can1.Children.RemoveRange(19, 36); //從第18個產生的物件開始移除(移除拼圖)
             creatpuzzle(5, 6);
         }
 
@@ -513,7 +522,7 @@ namespace WpfApplication1
             timersec.Stop();
             timershow.Stop();
 
-            this.lbtimer.Content = (int.Parse(this.lbtimer.Content.ToString())+1).ToString() + "秒到了";
+            this.lbtimer.Content = (int.Parse(this.lbtimer.Content.ToString()) + 1).ToString() + "秒到了";
             Rectangle_MouseUp(CurrentRec, curmouse);
         }
 
@@ -532,10 +541,11 @@ namespace WpfApplication1
         {
             textbox1.Clear();
             int count;
-            count = find_combo(orb);
+            int[,] temp = orb;
+            count = find_combo(temp);
             textbox1.Text += "總共有 " + count.ToString() + " Combo";
         }
     }
 
- 
+
 }

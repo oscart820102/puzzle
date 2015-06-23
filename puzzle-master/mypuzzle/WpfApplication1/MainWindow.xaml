@@ -1,34 +1,35 @@
 ﻿<Window x:Class="WpfApplication1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="704.925" Width="839.03">
+        Title="轉珠模擬小程式" Height="704.925" Width="839.03">
 
 
 
     <Canvas x:Name="can1"  >
-        <Label x:Name="lb1" Content="Label" Canvas.Left="558" Canvas.Top="40"/>
-        <Label x:Name="lb2" Content="Label" Canvas.Left="633" Canvas.Top="40"/>
-        <Button x:Name="btrand" Content="隨機產生盤面" Canvas.Left="573" Canvas.Top="102" Width="75" Click="btrand_Click"/>
+        <Label x:Name="lb1" Content="Label" Canvas.Left="612" Canvas.Top="403"/>
+        <Label x:Name="lb2" Content="Label" Canvas.Left="714" Canvas.Top="412"/>
+        <Button x:Name="btrand" Content="隨機產生盤面" Canvas.Left="117" Canvas.Top="351" Width="86" Click="btrand_Click" Height="26"/>
         <Label x:Name="lbwood" Content="Label" Canvas.Left="478" Canvas.Top="40"/>
         <Label x:Name="lbfire" Content="Label" Canvas.Left="478" Canvas.Top="71"/>
-        <Label x:Name="lbwater" Content="Label" Canvas.Left="478" Canvas.Top="206"/>
+        <Label x:Name="lbwater" Content="Label" Canvas.Left="478" Canvas.Top="194"/>
         <Label x:Name="lbgold" Content="Label" Canvas.Left="478" Canvas.Top="163"/>
         <Label x:Name="lbdark" Content="Label" Canvas.Left="478" Canvas.Top="133"/>
         <Label x:Name="lbheart" Content="Label" Canvas.Left="478" Canvas.Top="102"/>
-        <Label x:Name="lbcombo" Content="Label" Canvas.Left="478" Canvas.Top="237"/>
+        <Label x:Name="lbcombo" Content="Label" Canvas.Left="478" Canvas.Top="219"/>
         <Image x:Name="image1" Height="100" Canvas.Left="612" Canvas.Top="181" Width="100" Visibility="Hidden"/>
-        <Label x:Name="plabel" Content="for mouse position" Canvas.Left="612" Canvas.Top="189"/>
-        <Label x:Name="lbtimer" Content="0" Canvas.Left="573" Canvas.Top="135" Height="41" Width="179" FontSize="18" />
-        <Button x:Name="btchange_color" Content="手動換色" Canvas.Left="598" Canvas.Top="327" Width="75" Click="btchange_color_Click"/>
-        <Button x:Name="btspin_mode" Content="轉珠模式" Canvas.Left="598" Canvas.Top="395" Width="76" Click="btspin_mode_Click"/>
-        <Button x:Name="btn_combo" Content="判斷Combo" Canvas.Left="598" Canvas.Top="452" Width="75" Click="btn_combo_Click"/>
-        <TextBox x:Name="textbox1" Height="156" Canvas.Left="300" TextWrapping="Wrap" Canvas.Top="310" Width="258"/>
+        <Label x:Name="plabel" Content="for mouse position" Canvas.Left="659" Canvas.Top="286"/>
+        <Label x:Name="lbtimer" Content="0" Canvas.Left="117" Canvas.Top="10" Height="41" Width="179" FontSize="18" />
+        <Button x:Name="btchange_color" Content="手動換色" Canvas.Left="546" Canvas.Top="106" Width="75" Click="btchange_color_Click"/>
+        <Button x:Name="btspin_mode" Content="轉珠模式" Canvas.Left="545" Canvas.Top="149" Width="76" Click="btspin_mode_Click"/>
+        <Button x:Name="btn_combo" Content="判斷Combo" Canvas.Left="590" Canvas.Top="337" Width="76" Click="btn_combo_Click"/>
+        <TextBox x:Name="textbox1" Height="156" Canvas.Left="298" TextWrapping="Wrap" Canvas.Top="337" Width="258"/>
         <ComboBox x:Name="comboTime" Canvas.Left="117" Canvas.Top="399" Width="120" SelectedIndex="1">
             <ComboBoxItem Content="3" HorizontalAlignment="Left" Width="118.4"/>
             <ComboBoxItem Content="5" HorizontalAlignment="Left" Width="118.4"/>
             <ComboBoxItem Content="10" HorizontalAlignment="Left" Width="118.4"/>
             <ComboBoxItem Content="無限制" HorizontalAlignment="Left" Width="118.4"/>
         </ComboBox>
+        <Label x:Name="lb_Mode" Content="轉珠模式" Canvas.Left="546" Canvas.Top="48" Height="40" Width="107" FontSize="18"/>
 
 
 
