@@ -66,16 +66,16 @@ namespace WpfApplication1
             wood = 0; water = 0; fire = 0; gold = 0; dark = 0; heart = 0;
             for (int i = 0; i < x; i++) {
                 for (int j = 0; j < y; j++) {
-                    System.Windows.Shapes.Rectangle rec = new System.Windows.Shapes.Rectangle()
+                    System.Windows.Shapes.Ellipse rec = new System.Windows.Shapes.Ellipse()
                     {
                         Height = 50,
-                        Width = 50,
+                        Width = 47,
                         //Stroke = new SolidColorBrush(Colors.Transparent),                      
                     };
                     randomfill(i , j , rec);    //隨機給珠子顏色           
-                    rec.MouseDown +=  new MouseButtonEventHandler(this.Rectangle_MouseDown); 
-                    rec.MouseMove +=  new MouseEventHandler(this.Rectangle_MouseMove);
-                    rec.MouseUp += new MouseButtonEventHandler(this.Rectangle_MouseUp);
+                    rec.MouseDown += new MouseButtonEventHandler(this.Ellipse_MouseDown);
+                    rec.MouseMove += new MouseEventHandler(this.Ellipse_MouseMove);
+                    rec.MouseUp += new MouseButtonEventHandler(this.Ellipse_MouseUp);
                     Canvas.SetTop(rec, 40 +i*55);
                     Canvas.SetLeft(rec, 40+ j*55);                    
                     can1.Children.Add(rec);
@@ -90,7 +90,7 @@ namespace WpfApplication1
             lbcombo.Content = "最大combo數: " + ((dark / 3) + (water / 3) + (fire / 3) + (wood / 3) + (gold / 3) + (heart / 3));
         }
 
-        private void randomfill(int a , int b , System.Windows.Shapes.Rectangle rec)//隨機上色
+        private void randomfill(int a, int b, System.Windows.Shapes.Ellipse rec)//隨機上色
         {
             Random rnd = new Random(Guid.NewGuid().GetHashCode());
             int x = rnd.Next(6);
@@ -149,7 +149,7 @@ namespace WpfApplication1
         double oldpositionY;    
         double currentshapX;    //圖形隨著滑鼠移動的位置
         double currentshapY;
-        System.Windows.Shapes.Rectangle CurrentRec = null;  //宣告目前移動的正方形
+        System.Windows.Shapes.Ellipse CurrentRec = null;  //宣告目前移動的正方形
 
         private int find_combo(int[,] ori)
         {
@@ -313,14 +313,14 @@ namespace WpfApplication1
                     ori =  setzero(ori, i, j + 1);
             return ori;
         }
-                                               
-        private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
+
+        private void Ellipse_MouseDown(object sender, MouseButtonEventArgs e)
         {
             clearTB();
             if (changemode)  //換色模式
             {
                 double x, y;
-                System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
+                System.Windows.Shapes.Ellipse item = sender as System.Windows.Shapes.Ellipse;
                // item.Fill = new SolidColorBrush(Colors.Red);  //delete later, just for mouse test
                 ImageBrush brush = null;
                 //image1.Source = new BitmapImage(new Uri("images/dark.png", UriKind.Relative));
@@ -530,7 +530,7 @@ namespace WpfApplication1
 
                 curmouse = e;
 
-                System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
+                System.Windows.Shapes.Ellipse item = sender as System.Windows.Shapes.Ellipse;
                 CurrentRec = item;  //記錄下要移動的正方形(hittest才可以判斷)
                 // item.Fill = new SolidColorBrush(Colors.Red);  //delete later, just for mouse test
                 Canvas.SetZIndex(item, 100);  //移動的物體總是在最上方
@@ -545,9 +545,9 @@ namespace WpfApplication1
             
         }
 
-        private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Ellipse_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
+            System.Windows.Shapes.Ellipse item = sender as System.Windows.Shapes.Ellipse;
             if (!changemode && item.IsMouseCaptured)  //如果是上色模式就不執行
             {
                 
@@ -562,11 +562,15 @@ namespace WpfApplication1
             }
         }
 
-        private void Rectangle_MouseMove(object sender, MouseEventArgs e)
-        {                       
-            System.Windows.Shapes.Rectangle item = sender as System.Windows.Shapes.Rectangle;
+        private void Ellipse_MouseMove(object sender, MouseEventArgs e)
+        {
+            System.Windows.Shapes.Ellipse item = sender as System.Windows.Shapes.Ellipse;
             if (item.IsMouseCaptured)
             {
+                System.Windows.Point pt = new System.Windows.Point(mouseX, mouseY);
+                VisualTreeHelper.HitTest(this, null,
+                new HitTestResultCallback(myHitTestResult),
+                new PointHitTestParameters(pt));
                 // Calculate the current position of the object.
                 double deltaX = e.GetPosition(null).X - mouseX;
                 double deltaY = e.GetPosition(null).Y - mouseY;
@@ -582,29 +586,31 @@ namespace WpfApplication1
                 mouseX = e.GetPosition(null).X;
                 mouseY = e.GetPosition(null).Y;
               //  將正方形形圖轉成幾何圖形
-                Geometry g = item.RenderedGeometry;
+                /*Geometry g = item.RenderedGeometry;
             //    座標位置轉換為視窗的座標
                 g.Transform = item.TransformToAncestor(this) as MatrixTransform;
                 VisualTreeHelper.HitTest(this, null,
                     new HitTestResultCallback(myHitTestResult),
-                    new GeometryHitTestParameters(g));
+                    new GeometryHitTestParameters(g));*/
             }
         }
            
   
         public HitTestResultBehavior myHitTestResult(HitTestResult result)
         {
-            if (result.VisualHit is System.Windows.Shapes.Rectangle && result.VisualHit!= CurrentRec)
+            if (result.VisualHit is System.Windows.Shapes.Ellipse && result.VisualHit != CurrentRec)
             {
-                System.Windows.Shapes.Rectangle rect = result.VisualHit as System.Windows.Shapes.Rectangle;
+                System.Windows.Shapes.Ellipse rect = result.VisualHit as System.Windows.Shapes.Ellipse;
             //    rect.Fill = new SolidColorBrush(Colors.Red);            
                 //if (currentshapX > oldpositionX + 25 || currentshapX < oldpositionX - 25 || currentshapY > oldpositionY + 25 || currentshapY < oldpositionY - 25)
-                if (((currentshapX - oldpositionX) * (currentshapX - oldpositionX) + (currentshapY - oldpositionY) * (currentshapY - oldpositionY)) > 1200)
+                //if (((currentshapX - oldpositionX) * (currentshapX - oldpositionX) + (currentshapY - oldpositionY) * (currentshapY - oldpositionY)) > 1200)
                 {
                     double tempX=0, tempY=0;
                     int temp;
                     tempX = (double)rect.GetValue(Canvas.LeftProperty);                  
                     tempY = (double)rect.GetValue(Canvas.TopProperty);
+                    if(tempX != oldpositionX || tempY != oldpositionY)
+                    {
                     rect.SetValue(Canvas.LeftProperty, oldpositionX);
                     rect.SetValue(Canvas.TopProperty, oldpositionY);
               //      lb1.Content = currentshapX;
@@ -614,6 +620,7 @@ namespace WpfApplication1
                     orb[(int)(tempY - 40) / 55, (int)(tempX - 40) / 55] = temp;
                     oldpositionX = tempX;
                     oldpositionY = tempY;
+                    }
                  //   lb1.Content = oldpositionX;
                   //  lb2.Content = oldpositionY;
                 }            
@@ -663,7 +670,7 @@ namespace WpfApplication1
             timershow.Stop();
 
             this.lbtimer.Content = (int.Parse(this.lbtimer.Content.ToString()) + 1).ToString() + "秒到了";
-            Rectangle_MouseUp(CurrentRec, curmouse);
+            Ellipse_MouseUp(CurrentRec, curmouse);
         }
 
         private void timershow_Tick(object sender, EventArgs e)
@@ -778,7 +785,7 @@ namespace WpfApplication1
             {
                 for (int b = 0; b < 6; b++)
                 {
-                    System.Windows.Shapes.Rectangle rec = new System.Windows.Shapes.Rectangle()
+                    System.Windows.Shapes.Ellipse rec = new System.Windows.Shapes.Ellipse()
                     {
                         Height = 50,
                         Width = 50,
@@ -829,10 +836,10 @@ namespace WpfApplication1
                             MessageBox.Show("asfd no puzzle!!!!!");
                             break;
                     }                  
-                    rec.Fill = brush;                    
-                    rec.MouseDown += new MouseButtonEventHandler(this.Rectangle_MouseDown);
-                    rec.MouseMove += new MouseEventHandler(this.Rectangle_MouseMove);
-                    rec.MouseUp += new MouseButtonEventHandler(this.Rectangle_MouseUp);
+                    rec.Fill = brush;
+                    rec.MouseDown += new MouseButtonEventHandler(this.Ellipse_MouseDown);
+                    rec.MouseMove += new MouseEventHandler(this.Ellipse_MouseMove);
+                    rec.MouseUp += new MouseButtonEventHandler(this.Ellipse_MouseUp);
                     Canvas.SetTop(rec, 40 + a * 55);
                     Canvas.SetLeft(rec, 40 + b * 55);
                     can1.Children.Add(rec);

@@ -20,7 +20,7 @@
         <Button x:Name="btspin_mode" Content="轉珠模式" Canvas.Left="597" Canvas.Top="367" Width="76" Click="btspin_mode_Click"/>
         <Button x:Name="btn_combo" Content="判斷Combo" Canvas.Left="598" Canvas.Top="483" Width="75" Click="btn_combo_Click"/>
         <TextBox x:Name="textbox1" Height="156" Canvas.Left="312" TextWrapping="Wrap" Canvas.Top="401" Width="258"/>
-        <Image Height="280" Canvas.Left="35" Source="images\board.png" Stretch="Fill" Canvas.Top="36" Width="333"/>
+        <Image Height="276" Canvas.Left="35" Source="images\board.png" Stretch="Fill" Canvas.Top="36" Width="333"/>
         <Image x:Name="Dard_Image" Height="40" Canvas.Left="44" Source="images\dark.png" Stretch="Fill" Canvas.Top="390" Width="37" MouseDown="Dard_Image_MouseDown"/>
         <Image x:Name="Red_Image" Height="40" Canvas.Left="44" Source="images\fire.png" Stretch="Fill" Canvas.Top="336" Width="37" MouseDown="Red_Image_MouseDown"/>
         <Image x:Name="Yellow_Image" Height="40" Canvas.Left="44" Source="images\gold.PNG" Stretch="Fill" Canvas.Top="447" Width="37" MouseDown="Yellow_Image_MouseDown"/>
